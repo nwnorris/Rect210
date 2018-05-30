@@ -116,9 +116,9 @@ public class P4GUI extends Application{
             sweepLine.setEndY(MAX_HEIGHT);
             sweepLine.setStroke(Color.BLUE);
             canvas.getChildren().add(sweepLine);
+            setStatus("Sweeping: " + intersect.getNumIntersects() + " intersections." );
         }
 
-        setStatus("Sweeping: " + intersect.getNumIntersects() + " intersections." );
 
 
     }
@@ -208,7 +208,7 @@ public class P4GUI extends Application{
         MenuItem countArrayMenuItem = new MenuItem("Brute force");
         countArrayMenuItem.setOnAction(event -> {
             intersect.bruteForce();
-            setStatus("Brute force : " + intersect.getNumIntersects() + " intersections in ");
+            setStatus("Brute force : " + intersect.getNumIntersects() + " intersections [" + intersect.getRunTime() + "ms]");
 
             update();
         });
@@ -218,11 +218,12 @@ public class P4GUI extends Application{
         sweepLineMenuItem.setOnAction(event -> {
             intersect.initSweepLine();
             SweepEvent result = intersect.sweep();
+            long start = System.currentTimeMillis();
             while(result != null){
                 result = intersect.sweep();
             }
-
-            setStatus("Sweep line: " + intersect.getNumIntersects() + " intersections.");
+            long runTime = System.currentTimeMillis() - start;
+            setStatus("Sweep line: " + intersect.getNumIntersects() + " intersections [" + runTime + "ms]");
         });
 
         rectMenu.getItems().addAll(countArrayMenuItem, sweepLineMenuItem);

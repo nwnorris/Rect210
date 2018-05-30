@@ -12,6 +12,7 @@ public class P4Intersect {
     private LineSweeper sweeper;
     private boolean sweeping = false;
     private String fileName;
+    private long runTime;
 
     /**
      * Constructor, requires a file name and a Rect210Factory to be used when loading the rect file.
@@ -53,8 +54,11 @@ public class P4Intersect {
      * Creates a brute force sledgehammer and uses the hammer to calculate all intersections. Writes the result to a file.
      */
     public void bruteForce(){
+
         RectSledgehammer hammer = new RectSledgehammer(this);
+        long start = System.currentTimeMillis();
         intersects = hammer.bruteForce();
+        runTime = System.currentTimeMillis() - start;
         saveOutput();
     }
 
@@ -103,5 +107,9 @@ public class P4Intersect {
      */
     public LineSweeper getSweeper() {
         return sweeper;
+    }
+
+    public long getRunTime(){
+        return runTime;
     }
 }
